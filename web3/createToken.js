@@ -1,13 +1,13 @@
 const splToken = require('@solana/spl-token')
 
-const createToken = async (connection, fromWallet, toWallet) => {
+const createToken = async (connection, fromWallet, toWallet, decimals) => {
   //create new token mint
   let mint = await splToken.Token.createMint(
     connection,
     fromWallet,
     fromWallet.publicKey,
     null,
-    9,
+    decimals,
     splToken.TOKEN_PROGRAM_ID
   )
 
