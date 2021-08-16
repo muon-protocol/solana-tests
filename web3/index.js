@@ -1,8 +1,8 @@
 require('dotenv').config()
 
 const web3 = require('@solana/web3.js')
-const splToken = require('@solana/spl-token')
 const getKeyPair = require('./getKeyPair')
+const createToken = require('./createToken')
 
 ;(async () => {
   // private key Source and public key dest
@@ -17,4 +17,11 @@ const getKeyPair = require('./getKeyPair')
 
   const fromWallet = getKeyPair(fromPrivateKey)
   const toWallet = new web3.PublicKey(toPubKey)
+
+  // Create token and add to Wallet from and to
+  const { mint, fromTokenAccount, toTokenAccount } = await createToken(
+    connection,
+    fromWallet,
+    toWallet
+  )
 })()
