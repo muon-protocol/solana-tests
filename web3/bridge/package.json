@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "create-token": "node createToken.js",
-    "mint": "node mintToken.js"
+    "mint": "node mintToken.js",
+    "help": "node help.js"
   },
   "author": "",
   "license": "ISC",
