@@ -5,40 +5,40 @@ const getKeyPair = require('./getKeyPair')
 const createToken = require('./createToken')
 const mintToken = require('./mintToken')
 const tokenTransfer = require('./tokenTransfer')
+const getTokenInfo = require('./getTokenInfo')
 
 ;(async () => {
-  // private key Source and public key dest
-  const fromPrivateKey = process.env.FROM_PRIVATE_KEY
-  const toPubKey = process.env.TO_PUBLIC_KEY
+  // const tokenPubKey = ''
+  const tokenPubKey = '7wXz36nMD1AjcaMwV8PCQFuNZe1212NdwV9ndvnsui7k'
 
   // Connect to cluster
-  var connection = new web3.Connection(
+  const connection = new web3.Connection(
     web3.clusterApiUrl('testnet'),
     'confirmed'
   )
 
-  const fromWallet = getKeyPair(fromPrivateKey)
-  const toWallet = new web3.PublicKey(toPubKey)
+  const fromWallet = getKeyPair(process.env.FROM_PRIVATE_KEY)
+  const toWallet = new web3.PublicKey(process.env.TO_PUBLIC_KEY)
 
-  // Create token and add to Wallet from and to
-  console.log('------------ Start creating token with decimal 9 ------------')
-  const { mint, fromTokenAccount, toTokenAccount } = await createToken(
-    connection,
-    fromWallet,
-    toWallet,
-    9
+  // Create token and add to Wallet from and to Or get information from token
+  console.log(
+    '------------ Start creating token with decimal 9 or get information ------------'
   )
+  const { token, fromTokenAccount, toTokenAccount } = tokenPubKey
+    ? await getTokenInfo(connection, fromWallet, toWallet, tokenPubKey)
+    : await createToken(connection, fromWallet, toWallet, 9)
+
   console.log('------------ Start minting 100 token ------------')
 
-  await mintToken(mint, fromTokenAccount, fromWallet, 100000000000)
+  await mintToken(token, fromTokenAccount, fromWallet, 100000000000)
 
   console.log('------------ Start transfer 99 token to toWallet------------')
 
-  await tokenTransfer(
-    connection,
-    fromTokenAccount,
-    toTokenAccount,
-    fromWallet,
-    99000000000
-  )
+  // await tokenTransfer(
+  //   connection,
+  //   fromTokenAccount,
+  //   toTokenAccount,
+  //   fromWallet,
+  //   99000000000
+  // )
 })()
