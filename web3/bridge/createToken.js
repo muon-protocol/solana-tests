@@ -27,7 +27,6 @@ const associatedAccountInfo = require('./associatedAccountInfo')
   )
   await associatedAccountInfo(token, fromWallet.publicKey)
   const tokenPubKey = new web3.PublicKey(token.publicKey).toString()
-  // console.log('Token Public Key:', tokenPubKey)
   console.log(
     `\nTo mint, add the following parameter to the env file:\n\n TOKEN_PUB_KEY='${tokenPubKey}'\n`
   )

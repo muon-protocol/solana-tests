@@ -17,6 +17,7 @@ const associatedAccountInfo = require('./associatedAccountInfo')
   )
 
   const fromWallet = getKeyPair(process.env.FROM_PRIVATE_KEY)
+  const toWallet = new web3.PublicKey(process.env.TO_PUBLIC_KEY)
 
   //  get info token
   const token = await getTokenInfo(
@@ -25,10 +26,7 @@ const associatedAccountInfo = require('./associatedAccountInfo')
     process.env.TOKEN_PUB_KEY
   )
   //  get assosiated token account
-  const fromTokenAccount = await associatedAccountInfo(
-    token,
-    fromWallet.publicKey
-  )
+  const destTokenAccount = await associatedAccountInfo(token, toWallet)
   //minting  new token to the "fromTokenAccount" account we just returned/created
-  await token.mintTo(fromTokenAccount.address, fromWallet.publicKey, [], amount)
+  await token.mintTo(destTokenAccount.address, fromWallet.publicKey, [], amount)
 })()
