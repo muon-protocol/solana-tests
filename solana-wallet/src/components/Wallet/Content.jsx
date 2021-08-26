@@ -9,7 +9,17 @@ import { Connection } from '@solana/web3.js'
 const Content = () => {
   const DECIMAL_OFFSET = 1000000000
 
-  const { publicKey, wallet, connected } = useWallet()
+  const {
+    name,
+    adapter,
+    publicKey,
+    wallet,
+    connected,
+    ready,
+    connecting,
+    disconnecting,
+    autoApprove
+  } = useWallet()
   const accountAddress = publicKey?.toString()
   const [balance, setBalance] = React.useState(null)
   const connection = new Connection('https://api.testnet.solana.com')
@@ -20,7 +30,17 @@ const Content = () => {
       console.log(error)
       setBalance(null)
     })
-  console.log({ publicKey, wallet, connected, accountAddress })
+  console.log({
+    name,
+    adapter,
+    publicKey,
+    wallet,
+    connected,
+    ready,
+    connecting,
+    disconnecting,
+    autoApprove
+  })
   return (
     <>
       <div className="row mt-5">
@@ -32,8 +52,9 @@ const Content = () => {
         </div>
       </div>
       <div className="row col-12 mt-5">
-        <h3 className="mb-5">Your account address :{accountAddress}</h3>
-
+        <h3>Your account address :{accountAddress}</h3>
+      </div>
+      <div className="row col-12 mt-5">
         <h2>Your SOL balances :{balance}</h2>
       </div>
     </>
