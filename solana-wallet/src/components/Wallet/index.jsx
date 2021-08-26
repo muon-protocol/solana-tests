@@ -9,11 +9,8 @@ import {
   getSolongWallet,
   getTorusWallet
 } from '@solana/wallet-adapter-wallets'
-import {
-  WalletDialogProvider,
-  WalletDisconnectButton,
-  WalletMultiButton
-} from '@solana/wallet-adapter-material-ui'
+import { WalletDialogProvider } from '@solana/wallet-adapter-material-ui'
+import Content from './Content'
 
 const Wallet = () => {
   const wallets = useMemo(
@@ -34,14 +31,7 @@ const Wallet = () => {
   return (
     <WalletProvider wallets={wallets} autoConnect>
       <WalletDialogProvider>
-        <div className="row mt-5">
-          <div className="col-2">
-            <WalletMultiButton />
-          </div>
-          <div className="col-3">
-            <WalletDisconnectButton />
-          </div>
-        </div>
+        <Content />
       </WalletDialogProvider>
     </WalletProvider>
   )
